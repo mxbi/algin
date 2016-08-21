@@ -51,6 +51,8 @@ class v(object):
             return self.plus_scalar(o)
         elif type(o) is v:
             return self.plus_vector(o)
+        elif type(o) in [list, tuple]:
+            return self.plus_vector(v(o))
         else:
             return NotImplemented
 
@@ -78,6 +80,8 @@ class v(object):
             return self.minus_scalar(o)
         elif type(o) is v:
             return self.minus_vector(o)
+        elif type(o) in [list, tuple]:
+            return self.minus_vector(v(o))
         else:
             return NotImplemented
 
@@ -86,6 +90,8 @@ class v(object):
             return self.rminus_scalar(o)
         elif type(o) is v:
             return self.rminus_vector(o)
+        elif type(o) in [list, tuple]:
+            return self.rminus_vector(v(o))
         else:
             return NotImplemented
 
@@ -103,6 +109,8 @@ class v(object):
             return self.times_scalar(o)
         elif type(o) is v:
             return self.times_vector(o)
+        elif type(o) in [list, tuple]:
+            return self.times_vector(v(o))
         else:
             return NotImplemented
 
@@ -123,6 +131,8 @@ class v(object):
             return self.truediv_scalar(o)
         elif type(o) is v:
             return self.truediv_vector(o)
+        elif type(o) in [list, tuple]:
+            return self.truediv_vector(v(o))
         else:
             return NotImplemented
 
@@ -138,20 +148,24 @@ class v(object):
             return self.rtruediv_scalar(o)
         elif type(o) is v:
             return self.rtruediv_vector(o)
+        elif type(o) in [list, tuple]:
+            return self.rtruediv_vector(v(o))
         else:
             return NotImplemented
 
     ## Floor division
 
     def __floordiv__(self, o):
-        if type(o) in [int, float, v]:
+        if type(o) in [int, float, v, list, tuple]:
             return v([floor(x) for x in self.__truediv__(o).coor])
         else:
             return NotImplemented
 
     def __rfloordiv__(self, o):
-        if type(o) in [int, float, v]:
+        if type(o) in [int, float, v, list, tuple]:
             return v([floor(x) for x in self.__rtruediv__(o).coor])
+        else:
+            return NotImplemented
 
     # Magnitude of vector
     def mag(self):

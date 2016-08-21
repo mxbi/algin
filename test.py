@@ -53,4 +53,7 @@ assert v(x) == x
 assert x[3] == 4
 assert y[1:] == [0, 0, 1]
 
+# Test vector conversion
+assert x * [2, 0, 0, 1] == x * y
+
 print('All tests pass!')
