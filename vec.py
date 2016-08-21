@@ -1,3 +1,5 @@
+from math import floor
+
 class v(object):
     def __init__(self, coor):
         try:
@@ -17,11 +19,14 @@ class v(object):
     def __str__(self):
         return 'Vector: ' + str(self.coor)
 
+    def __repr__(self):
+        return self.__str__()
+
     # Checking for equality
     def __eq__(self, ov):
         return self.coor == ov.coor
 
-    # Addition
+    ## Addition
 
     def plus_vector(self, ov):
         assert self.dim == ov.dim, 'Vectors must be the same dimensionality.'
@@ -41,7 +46,7 @@ class v(object):
     def __radd__(self, o):
         return self.__add__(o)
 
-    # Subtraction
+    ## Subtraction
 
     def minus_vector(self, ov):
         assert self.dim == ov.dim, 'Vectors must be the same dimensionality.'
@@ -67,16 +72,16 @@ class v(object):
 
     def __rsub__(self, o):
         if type(o) in [int, float]:
-            return self.minus_scalar(o)
+            return self.rminus_scalar(o)
         elif type(o) is v:
-            return self.minus_vector(o)
+            return self.rminus_vector(o)
         else:
             return NotImplemented
 
-    # Multiplication
+    ## Multiplication
 
     def times_scalar(self, c):
-        return v([c * x for x in self.coor])
+        return v([x * c for x in self.coor])
 
     def times_vector(self, ov):
         assert self.dim == ov.dim, 'Vectors must be the same dimensionality.'
@@ -92,3 +97,47 @@ class v(object):
 
     def __rmul__(self, o):
         return self.__mul__(o)
+
+    ## True divison
+
+    def truediv_scalar(self, c):
+        return v([x / c for x in self.coor])
+
+    def truediv_vector(self, ov):
+        assert self.dim == ov.dim, 'Vectors must be the same dimensionality.'
+        return v([x / y for x, y in zip(self.coor, ov.coor)])
+
+    def __truediv__(self, o):
+        if type(o) in [int, float]:
+            return self.truediv_scalar(o)
+        elif type(o) is v:
+            return self.truediv_vector(o)
+        else:
+            return NotImplemented
+
+    def rtruediv_scalar(self, c):
+        return v([c / x for x in self.coor])
+
+    def rtruediv_vector(self, ov):
+        assert self.dim == ov.dim, 'Vectors must be the same dimensionality.'
+        return v([y / x for x, y in zip(self.coor, ov.coor)])
+
+    def __rtruediv__(self, o):
+        if type(o) in [int, float]:
+            return self.rtruediv_scalar(o)
+        elif type(o) is v:
+            return self.rtruediv_vector(o)
+        else:
+            return NotImplemented
+
+    ## Floor division
+
+    def __floordiv__(self, o):
+        if type(o) in [int, float, v]:
+            return v([floor(x) for x in self.__truediv__(o).coor])
+        else:
+            return NotImplemented
+
+    def __rfloordiv__(self, o):
+        if type(o) in [int, float, v]:
+            return v([floor(x) for x in self.__rtruediv__(o).coor])
