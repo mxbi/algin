@@ -1,4 +1,4 @@
-from math import floor
+from math import floor, sqrt
 
 class v(object):
     def __init__(self, coor):
@@ -141,3 +141,11 @@ class v(object):
     def __rfloordiv__(self, o):
         if type(o) in [int, float, v]:
             return v([floor(x) for x in self.__rtruediv__(o).coor])
+
+    # Magnitude of vector
+    def mag(self):
+        return sqrt(sum([x ** 2 for x in self.coor]))
+
+    # Normalised vector
+    def norm(self):
+        return v(self / self.mag())

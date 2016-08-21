@@ -1,4 +1,5 @@
 from vec import v
+from math import sqrt
 
 x = v([1, 2, 3, 4])
 y = v([2, 0, 0, 1])
@@ -39,5 +40,12 @@ assert x // 2 != 2 // x
 assert x // 2 == v([0, 1, 1, 2])
 assert y // 2 == v([1, 0, 0, 0])
 assert 2 // x == v([2, 1, 0, 0])
+
+# Test magnitude/normalisation
+assert x.mag() == sqrt(1 + 4 + 9 + 16)
+assert y.mag() == sqrt(5)
+assert x.norm().mag() == 1
+assert sum(y.norm().coor) == 1
+assert x.norm() == v([x / sqrt(1 + 4 + 9 + 16) for x in [1, 2, 3, 4]])
 
 print('All tests pass!')
