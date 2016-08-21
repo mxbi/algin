@@ -44,8 +44,13 @@ assert 2 // x == v([2, 1, 0, 0])
 # Test magnitude/normalisation
 assert x.mag() == sqrt(1 + 4 + 9 + 16)
 assert y.mag() == sqrt(5)
-assert x.norm().mag() == 1
-assert sum(y.norm().coor) == 1
+assert abs(x.norm().mag() - 1) < 0.00001  #  Error must be less than 0.00001
 assert x.norm() == v([x / sqrt(1 + 4 + 9 + 16) for x in [1, 2, 3, 4]])
+
+# Test vector iterator
+assert v(list(x)) == x
+assert v(x) == x
+assert x[3] == 4
+assert y[1:] == [0, 0, 1]
 
 print('All tests pass!')

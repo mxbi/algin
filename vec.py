@@ -5,15 +5,18 @@ class v(object):
         try:
             if not coor:
                 raise ValueError
-            self.coor = list(coor)
-            self.dim = len(coor)
+            if type(coor) is v:
+                self.coor = coor.coor
+            else:
+                self.coor = list(coor)
+            self.dim = len(self.coor)
 
         except KeyboardInterrupt:
             raise
         except ValueError:
             raise ValueError('The co-ordinates must contain values')
         except TypeError:
-            raise TypeError('The co-ordinates must be an iterable')
+            raise TypeError('The input type ' + str(type(coor)) + ' is not supported.')
 
     # Called when converting to string or printing
     def __str__(self):
@@ -25,6 +28,14 @@ class v(object):
     # Checking for equality
     def __eq__(self, ov):
         return self.coor == ov.coor
+
+    # Allow for conversions to lists etc
+    def __iter__(self):
+        return iter(self.coor)
+
+    # Allow for dimension selection
+    def __getitem__(self, i):
+        return self.coor[i]
 
     ## Addition
 
